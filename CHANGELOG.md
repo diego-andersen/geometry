@@ -1,12 +1,12 @@
-# geometry Change Log
+# logic Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Fork from geometry-zsh
+## Fork from logic-zsh
 
-Project forked from [geometry-zsh/geometry](https://github.com/geometry-zsh/geometry/) in order to add personal preferences without polluting.
+Project forked from [logic-zsh/logic](https://github.com/logic-zsh/logic/) in order to add personal preferences without polluting.
 Renamed to logic, to keep with the mathematical theme.
 
 ## [Unreleased]
@@ -27,4 +27,4 @@ Renamed to logic, to keep with the mathematical theme.
 - Change Log file
 - Initial release features
 
-[Unreleased]: https://github.com/geometry-zsh/geometry/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/logic-zsh/logic/compare/v1.0.0...HEAD

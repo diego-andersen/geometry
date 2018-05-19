@@ -10,21 +10,21 @@ It requires [rustup_prompt_helper][].
 ## Configuration
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS+=(rustup)
+LOGIC_PROMPT_PLUGINS+=(rustup)
 ```
 
 ### Colors
 
 ```sh
-GEOMETRY_COLOR_RUSTUP_STABLE="green"
-GEOMETRY_COLOR_RUSTUP_BETA="yellow"
-GEOMETRY_COLOR_RUSTUP_NIGHTLY="red"
+LOGIC_COLOR_RUSTUP_STABLE="green"
+LOGIC_COLOR_RUSTUP_BETA="yellow"
+LOGIC_COLOR_RUSTUP_NIGHTLY="red"
 ```
 
 ### Symbols
 
 ```sh
-GEOMETRY_SYMBOL_RUSTUP="⚙"
+LOGIC_SYMBOL_RUSTUP="⚙"
 ```
 
 [rustup_prompt_helper]: https://github.com/ijanos/rustup_prompt_helper

@@ -1,19 +1,19 @@
 # Node
 
-Node plugin. Displays node and npm/yarn version when in a node project context (ie, when located in a directory where there is a `package.json` or `yarn.lock` files). If you want it to display regardless of context use [plugin pinning](https://github.com/geometry-zsh/geometry/tree/master/plugins#pinning).
+Node plugin. Displays node and npm/yarn version when in a node project context (ie, when located in a directory where there is a `package.json` or `yarn.lock` files). If you want it to display regardless of context use [plugin pinning](https://github.com/logic-zsh/logic/tree/master/plugins#pinning).
 
 ## Configuration
 
 ### Colors
 
 ```sh
-GEOMETRY_COLOR_PACKAGER_VERSION="black"
+LOGIC_COLOR_PACKAGER_VERSION="black"
 ```
 
 
 ### Symbols
 
 ```sh
-GEOMETRY_SYMBOL_NODE_NPM_VERSION="⬡"
+LOGIC_SYMBOL_NODE_NPM_VERSION="⬡"
 ```
 

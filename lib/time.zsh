@@ -1,13 +1,13 @@
-GEOMETRY_COLOR_TIME_SHORT=${GEOMETRY_COLOR_TIME_SHORT:-green}
-GEOMETRY_COLOR_TIME_NEUTRAL=${GEOMETRY_COLOR_TIME_NEUTRAL:-white}
-GEOMETRY_COLOR_TIME_LONG=${GEOMETRY_COLOR_TIME_LONG:-red}
-GEOMETRY_COLOR_NO_TIME=${GEOMETRY_COLOR_NO_TIME:-red}
+LOGIC_COLOR_TIME_SHORT=${LOGIC_COLOR_TIME_SHORT:-green}
+LOGIC_COLOR_TIME_NEUTRAL=${LOGIC_COLOR_TIME_NEUTRAL:-white}
+LOGIC_COLOR_TIME_LONG=${LOGIC_COLOR_TIME_LONG:-red}
+LOGIC_COLOR_NO_TIME=${LOGIC_COLOR_NO_TIME:-red}
 
-typeset -g geometry_time_human
-typeset -g geometry_time_color
+typeset -g logic_time_human
+typeset -g logic_time_color
 
 # Format time in short format: 4s, 4h, 1d
--prompt_geometry_time_short_format() {
+-prompt_logic_time_short_format() {
   local human=""
   local color=""
   local days=$1
@@ -17,24 +17,24 @@ typeset -g geometry_time_color
 
   if (( days > 0 )); then
     human="${days}d"
-    color=$GEOMETRY_COLOR_TIME_LONG
+    color=$LOGIC_COLOR_TIME_LONG
   elif (( hours > 0 )); then
     human="${hours}h"
-    color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
+    color=${color:-$LOGIC_COLOR_TIME_NEUTRAL}
   elif (( minutes > 0 )); then
     human="${minutes}m"
-    color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+    color=${color:-$LOGIC_COLOR_TIME_SHORT}
   else
     human="${seconds}s"
-    color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+    color=${color:-$LOGIC_COLOR_TIME_SHORT}
   fi
 
-  geometry_time_color=$color
-  geometry_time_human=$human
+  logic_time_color=$color
+  logic_time_human=$human
 }
 
 # Format time in long format: 1d4h33m51s, 33m51s
--prompt_geometry_time_long_format() {
+-prompt_logic_time_long_format() {
   local human=""
   local color=""
   local days=$1
@@ -42,17 +42,17 @@ typeset -g geometry_time_color
   local minutes=$3
   local seconds=$4
 
-  (( days > 0 )) && human+="${days}d " && color=$GEOMETRY_COLOR_TIME_LONG
-  (( hours > 0 )) && human+="${hours}h " && color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
+  (( days > 0 )) && human+="${days}d " && color=$LOGIC_COLOR_TIME_LONG
+  (( hours > 0 )) && human+="${hours}h " && color=${color:-$LOGIC_COLOR_TIME_NEUTRAL}
   (( minutes > 0 )) && human+="${minutes}m "
-  human+="${seconds}s" && color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+  human+="${seconds}s" && color=${color:-$LOGIC_COLOR_TIME_SHORT}
 
-  geometry_time_color=$color
-  geometry_time_human=$human
+  logic_time_color=$color
+  logic_time_human=$human
 }
 
 # from https://github.com/sindresorhus/pretty-time-zsh
-prompt_geometry_seconds_to_human_time() {
+prompt_logic_seconds_to_human_time() {
   local total_seconds=$1
   local long_format=$2
 
@@ -63,10 +63,10 @@ prompt_geometry_seconds_to_human_time() {
 
   # It looks redundant but it seems it's not
   if [[ $long_format == true ]]; then
-    -prompt_geometry_time_long_format $days $hours $minutes $seconds
+    -prompt_logic_time_long_format $days $hours $minutes $seconds
   else
-    -prompt_geometry_time_short_format $days $hours $minutes $seconds
+    -prompt_logic_time_short_format $days $hours $minutes $seconds
   fi
 
-  echo "$(prompt_geometry_colorize $geometry_time_color $geometry_time_human)"
+  echo "$(prompt_logic_colorize $logic_time_color $logic_time_human)"
 }
