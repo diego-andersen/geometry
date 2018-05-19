@@ -1,4 +1,4 @@
-source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
+source $LOGIC_ROOT/lib/zsh-async/async.zsh 2> /dev/null
 
 # Callback handler to properly render RPROMPT with calculated output
 -geometry-async-callback() {
@@ -33,10 +33,10 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
 geometry_async_setup() {
     # Workaround for missing zsh-async lib
     if (( ! $+functions[async_init] )); then
-      builtin pushd -q $GEOMETRY_ROOT > /dev/null
+      builtin pushd -q $LOGIC_ROOT > /dev/null
       command git submodule update --init > /dev/null
       builtin popd -q > /dev/null
-      source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null || { echo "Error: Could not load zsh-async library." >&2; return 1 }
+      source $LOGIC_ROOT/lib/zsh-async/async.zsh 2> /dev/null || { echo "Error: Could not load zsh-async library." >&2; return 1 }
     fi
 
     async_init

@@ -2,27 +2,27 @@
 # Based on Avit and Pure
 # avit: https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/avit.zsh-theme
 # pure: https://github.com/sindresorhus/pure
-GEOMETRY_ROOT=${0:A:h}
-source "$GEOMETRY_ROOT/lib/async.zsh"
-source "$GEOMETRY_ROOT/lib/color.zsh"
-source "$GEOMETRY_ROOT/lib/grep.zsh"
-source "$GEOMETRY_ROOT/lib/plugin.zsh"
-source "$GEOMETRY_ROOT/lib/time.zsh"
-source "$GEOMETRY_ROOT/lib/title.zsh"
+LOGIC_ROOT=${0:A:h}
+source "$LOGIC_ROOT/lib/async.zsh"
+source "$LOGIC_ROOT/lib/color.zsh"
+source "$LOGIC_ROOT/lib/grep.zsh"
+source "$LOGIC_ROOT/lib/plugin.zsh"
+source "$LOGIC_ROOT/lib/time.zsh"
+source "$LOGIC_ROOT/lib/title.zsh"
 
 # Flags
-PROMPT_GEOMETRY_SHOW_RPROMPT=${PROMPT_GEOMETRY_SHOW_RPROMPT:-true}
-PROMPT_GEOMETRY_RPROMPT_ASYNC=${PROMPT_GEOMETRY_RPROMPT_ASYNC:-true}
-PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
-PROMPT_GEOMETRY_PRIMARY_SUFFIX=${PROMPT_GEOMETRY_PRIMARY_SUFFIX:-" "}
+PROMPT_LOGIC_SHOW_RPROMPT=${PROMPT_LOGIC_SHOW_RPROMPT:-true}
+PROMPT_LOGIC_RPROMPT_ASYNC=${PROMPT_LOGIC_RPROMPT_ASYNC:-true}
+PROMPT_LOGIC_ENABLE_PLUGINS=${PROMPT_LOGIC_ENABLE_PLUGINS:-true}
+PROMPT_LOGIC_PRIMARY_SUFFIX=${PROMPT_LOGIC_PRIMARY_SUFFIX:-" "}
 
 prompt_geometry_render() {
-  PROMPT="$(geometry_plugin_render primary)$PROMPT_GEOMETRY_PRIMARY_SUFFIX"
+  PROMPT="$(geometry_plugin_render primary)$PROMPT_LOGIC_PRIMARY_SUFFIX"
 
-  PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
+  PROMPT2=" $LOGIC_SYMBOL_RPROMPT "
 
-  if $PROMPT_GEOMETRY_SHOW_RPROMPT; then
-    if $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
+  if $PROMPT_LOGIC_SHOW_RPROMPT; then
+    if $PROMPT_LOGIC_RPROMPT_ASYNC; then
         # On render we reset rprompt until async process
         # comes with newer git info
         RPROMPT=""
@@ -37,7 +37,7 @@ prompt_geometry_setup() {
   zmodload zsh/datetime
   autoload -U add-zsh-hook
 
-  if $PROMPT_GEOMETRY_ENABLE_PLUGINS; then
+  if $PROMPT_LOGIC_ENABLE_PLUGINS; then
     geometry_plugin_setup
   fi
 
@@ -47,7 +47,7 @@ prompt_geometry_setup() {
 
   add-zsh-hook precmd prompt_geometry_render
 
-  if $PROMPT_GEOMETRY_SHOW_RPROMPT && $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
+  if $PROMPT_LOGIC_SHOW_RPROMPT && $PROMPT_LOGIC_RPROMPT_ASYNC; then
     geometry_async_setup
   fi
 }

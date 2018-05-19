@@ -1,48 +1,48 @@
 # Define default separator for plugins' output
-typeset -g GEOMETRY_PLUGIN_SEPARATOR=${GEOMETRY_PLUGIN_SEPARATOR:-" "}
+typeset -g LOGIC_PLUGIN_SEPARATOR=${LOGIC_PLUGIN_SEPARATOR:-" "}
 
 # Define default context
-typeset -ga GEOMETRY_PROMPT_CTX
-if [[ $#GEOMETRY_PROMPT_CTX -eq 0 ]]; then
-  GEOMETRY_PROMPT_CTX=(primary secondary)
+typeset -ga LOGIC_PROMPT_CTX
+if [[ $#LOGIC_PROMPT_CTX -eq 0 ]]; then
+  LOGIC_PROMPT_CTX=(primary secondary)
 fi
 
 # Migrate from old config, previously it was only possible to
 # configure the right prompt which maps to secondary ctx
-if [[ ! $#GEOMETRY_PROMPT_PLUGINS -eq 0 ]]; then
-  GEOMETRY_PROMPT_PLUGINS_SECONDARY=$GEOMETRY_PROMPT_PLUGINS
+if [[ ! $#LOGIC_PROMPT_PLUGINS -eq 0 ]]; then
+  LOGIC_PROMPT_PLUGINS_SECONDARY=$LOGIC_PROMPT_PLUGINS
 fi
 
 # Define default plugins for primary and secondary ctx
-typeset -gA GEOMETRY_PROMPT_PLUGINS
+typeset -gA LOGIC_PROMPT_PLUGINS
 
 # Default plugins for primary ctx
-if [[ $#GEOMETRY_PROMPT_PLUGINS_PRIMARY -gt 0 ]]; then
-  GEOMETRY_PROMPT_PLUGINS[primary]=${(j/ /)GEOMETRY_PROMPT_PLUGINS_PRIMARY}
+if [[ $#LOGIC_PROMPT_PLUGINS_PRIMARY -gt 0 ]]; then
+  LOGIC_PROMPT_PLUGINS[primary]=${(j/ /)LOGIC_PROMPT_PLUGINS_PRIMARY}
 else
-  GEOMETRY_PROMPT_PLUGINS[primary]='path hostname'
+  LOGIC_PROMPT_PLUGINS[primary]='path hostname'
 fi
 
 # Default plugins for secondary ctx
-if [[ $#GEOMETRY_PROMPT_PLUGINS_SECONDARY -gt 0 ]]; then
-  GEOMETRY_PROMPT_PLUGINS[secondary]=${(j/ /)GEOMETRY_PROMPT_PLUGINS_SECONDARY}
+if [[ $#LOGIC_PROMPT_PLUGINS_SECONDARY -gt 0 ]]; then
+  LOGIC_PROMPT_PLUGINS[secondary]=${(j/ /)LOGIC_PROMPT_PLUGINS_SECONDARY}
 else
-  GEOMETRY_PROMPT_PLUGINS[secondary]='exec_time jobs git hg'
+  LOGIC_PROMPT_PLUGINS[secondary]='exec_time jobs git hg'
 fi
 
 # List of active plugins
-typeset -gA _GEOMETRY_PROMPT_PLUGINS
+typeset -gA _LOGIC_PROMPT_PLUGINS
 
 # Set up default plugins
 geometry_plugin_setup() {
   local _ctx_plugins
 
-  for ctx in $GEOMETRY_PROMPT_CTX; do
-    _ctx_plugins=(${(s/ /)GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  for ctx in $LOGIC_PROMPT_CTX; do
+    _ctx_plugins=(${(s/ /)LOGIC_PROMPT_PLUGINS[$ctx]})
     for plugin in $_ctx_plugins; do
       # Source built-in plugin if necessary, custom plugins should be already
       # sourced by the user, otherwise `geometry_plugin_register` will raise and error
-      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_
+      test -f "$LOGIC_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_
 
       # Register plugin for it's context
       geometry_plugin_register $plugin $ctx
@@ -63,7 +63,7 @@ geometry_plugin_register() {
 
   # Check plugin wasn't registered before
   local _ctx_plugins;
-  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  _ctx_plugins=(${(s/ /)_LOGIC_PROMPT_PLUGINS[$ctx]})
   if [[ ! $_ctx_plugins[(r)$plugin] == "" ]]; then
     echo "Warning: '${plugin#+}' plugin already registered on $ctx context." >&2
     return 1
@@ -79,7 +79,7 @@ geometry_plugin_register() {
   if $plugin_setup_function $ctx; then
     # Register plugin in $ctx with '+' for pinning
     _ctx_plugins+=$plugin
-    _GEOMETRY_PROMPT_PLUGINS[$ctx]=${(j/ /)_ctx_plugins}
+    _LOGIC_PROMPT_PLUGINS[$ctx]=${(j/ /)_ctx_plugins}
   fi
 }
 
@@ -90,7 +90,7 @@ geometry_plugin_unregister() {
 
   # Check plugin is registered
   local _ctx_plugins
-  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  _ctx_plugins=(${(s/ /)_LOGIC_PROMPT_PLUGINS[$ctx]})
   if [[ $_ctx_plugins[(r)$plugin] == "" ]]; then
     echo "Error: '${plugin#+}' plugin not registered on $ctx context." >&2
     return 1
@@ -102,14 +102,14 @@ geometry_plugin_unregister() {
   fi
 
   _ctx_plugins[$_ctx_plugins[(i)$plugin]]=()
-  _GEOMETRY_PROMPT_PLUGINS[$ctx]=${(j/ /)_ctx_plugins}
+  _LOGIC_PROMPT_PLUGINS[$ctx]=${(j/ /)_ctx_plugins}
 }
 
 # List registered plugins
 geometry_plugin_list() {
-  for ctx in $GEOMETRY_PROMPT_CTX; do
+  for ctx in $LOGIC_PROMPT_CTX; do
     echo "$ctx:"
-    echo $_GEOMETRY_PROMPT_PLUGINS[$ctx]
+    echo $_LOGIC_PROMPT_PLUGINS[$ctx]
   done
 }
 
@@ -119,7 +119,7 @@ geometry_plugin_check() {
   local ctx=${2:-secondary}
   local _ctx_plugins;
 
-  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  _ctx_plugins=(${(s/ /)_LOGIC_PROMPT_PLUGINS[$ctx]})
   # Pinned plugins aren't checked for
   [ $_ctx_plugins[(r)+$plugin] ] && return 0
 
@@ -136,13 +136,13 @@ geometry_plugin_render() {
   local ctx_prompt=""
   local _ctx_plugins;
 
-  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  _ctx_plugins=(${(s/ /)_LOGIC_PROMPT_PLUGINS[$ctx]})
   for plugin in $_ctx_plugins; do
     geometry_plugin_check $plugin $ctx || continue
 
     render=$(geometry_prompt_${plugin#+}_render $ctx)
     if [[ -n $render ]]; then
-      [[ -n $ctx_prompt ]] && ctx_prompt+="$GEOMETRY_PLUGIN_SEPARATOR"
+      [[ -n $ctx_prompt ]] && ctx_prompt+="$LOGIC_PLUGIN_SEPARATOR"
       ctx_prompt+="$render"
     fi
   done

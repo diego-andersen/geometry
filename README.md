@@ -53,7 +53,7 @@ Then add it to your `.zshrc` configuration:
 
 The symbol for rebasing comes from a [Powerline patched font](https://github.com/powerline/fonts). If you want to use it, you're going to need to install one from the font repo. The font used in the screenshots is [Roboto Mono](https://github.com/powerline/fonts/tree/master/RobotoMono). You can also try to [patch it yourself](https://github.com/powerline/fontpatcher).
 
-You can also change the rebase symbol by setting the `GEOMETRY_SYMBOL_GIT_REBASE` variable.
+You can also change the rebase symbol by setting the `LOGIC_SYMBOL_GIT_REBASE` variable.
 
 ## What it does
 
@@ -78,10 +78,10 @@ fast™.
 ## Plugins
 
 geometry has an internal plugin architecture. The default plugins are `exec_time`, `git` and `hg`.
-But you can enable a variety of built-in plugins just by setting the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files:
+But you can enable a variety of built-in plugins just by setting the `LOGIC_PROMPT_PLUGINS` variable in your own configuration files:
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
+LOGIC_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*.
@@ -94,7 +94,7 @@ Some plugins only render when you are in a given directory or in the presence of
 You can have those plugins always render by pinning a `+` before the name.
 
 ```sh
-export GEOMETRY_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always render
+export LOGIC_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always render
 ```
 
 geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
@@ -117,10 +117,10 @@ The default options try to balance the theme in order to be both lightweight and
 There are a set of symbols available which you can override with environment variables.
 
 ```shell
-GEOMETRY_SYMBOL_PROMPT="▲"                  # default prompt symbol
-GEOMETRY_SYMBOL_RPROMPT="◇"                 # multiline prompts
-GEOMETRY_SYMBOL_EXIT_VALUE="△"              # displayed when exit value is != 0
-GEOMETRY_SYMBOL_ROOT="▲"                    # when logged in user is root
+LOGIC_SYMBOL_PROMPT="▲"                  # default prompt symbol
+LOGIC_SYMBOL_RPROMPT="◇"                 # multiline prompts
+LOGIC_SYMBOL_EXIT_VALUE="△"              # displayed when exit value is != 0
+LOGIC_SYMBOL_ROOT="▲"                    # when logged in user is root
 ```
 
 You can find symbol configuration for specific plugins under the
@@ -131,10 +131,10 @@ You can find symbol configuration for specific plugins under the
 The following color definitions are available for configuration:
 
 ```shell
-GEOMETRY_COLOR_EXIT_VALUE="magenta"         # prompt symbol color when exit value is != 0
-GEOMETRY_COLOR_PROMPT="white"               # prompt symbol color
-GEOMETRY_COLOR_ROOT="red"                   # root prompt symbol color
-GEOMETRY_COLOR_DIR="blue"                   # current directory color
+LOGIC_COLOR_EXIT_VALUE="magenta"         # prompt symbol color when exit value is != 0
+LOGIC_COLOR_PROMPT="white"               # prompt symbol color
+LOGIC_COLOR_ROOT="red"                   # root prompt symbol color
+LOGIC_COLOR_DIR="blue"                   # current directory color
 ```
 
 You can find color configuration for specific plugins under the
@@ -144,24 +144,24 @@ You can find color configuration for specific plugins under the
 ### Misc
 
 ```shell
-GEOMETRY_PROMPT_PREFIX="$'\n'"              # prefix prompt with a new line
-GEOMETRY_PROMPT_SUFFIX=""                   # suffix prompt
-GEOMETRY_PROMPT_PREFIX_SPACER=" "           # string to place between prefix and symbol
-GEOMETRY_SYMBOL_SPACER=" "                  # string to place between symbol and directory
-GEOMETRY_DIR_SPACER=" "                     # string to place between directory and suffix
-GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt parts
-GEOMETRY_GREP=""                            # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
+LOGIC_PROMPT_PREFIX="$'\n'"              # prefix prompt with a new line
+LOGIC_PROMPT_SUFFIX=""                   # suffix prompt
+LOGIC_PROMPT_PREFIX_SPACER=" "           # string to place between prefix and symbol
+LOGIC_SYMBOL_SPACER=" "                  # string to place between symbol and directory
+LOGIC_DIR_SPACER=" "                     # string to place between directory and suffix
+LOGIC_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt parts
+LOGIC_GREP=""                            # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
 ```
 
 ### Features
 
 #### Async `RPROMPT`
 
-geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_RPROMPT_ASYNC` to `false`.
+geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_LOGIC_RPROMPT_ASYNC` to `false`.
 
 #### Randomly colorize prompt symbol
 
-Your prompt symbol can change colors based on a simple hash of your hostname. To enable this, set `PROMPT_GEOMETRY_COLORIZE_SYMBOL` to `true`.
+Your prompt symbol can change colors based on a simple hash of your hostname. To enable this, set `PROMPT_LOGIC_COLORIZE_SYMBOL` to `true`.
 
 ![colorize](screenshots/colorize.png)
 
@@ -169,16 +169,16 @@ Your prompt symbol can change colors based on a simple hash of your hostname. To
 
 You can have your prompt symbol change color when running under the `root` user.
 
-To activate this option, just set `PROMPT_GEOMETRY_COLORIZE_ROOT` to `true`. Both symbol and color can be customized by overriding the `GEOMETRY_SYMBOL_ROOT` and `GEOMETRY_COLOR_ROOT` variables.
+To activate this option, just set `PROMPT_LOGIC_COLORIZE_ROOT` to `true`. Both symbol and color can be customized by overriding the `LOGIC_SYMBOL_ROOT` and `LOGIC_COLOR_ROOT` variables.
 
 Note that this option overrides the color hashing of your prompt symbol.
 
 #### Display elapsed time for long-running commands
 
 You can optionally show a time display for long-running commands
-by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to `true`.
+by setting the `PROMPT_LOGIC_EXEC_TIME` variable to `true`.
 
-If enabled, this shows the elapsed time for commands running longer than 5 seconds. You can change this threshold by changing `PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME` to the number of desired seconds.
+If enabled, this shows the elapsed time for commands running longer than 5 seconds. You can change this threshold by changing `PROMPT_LOGIC_COMMAND_MAX_EXEC_TIME` to the number of desired seconds.
 
 ![long_running](screenshots/long_running.png)
 
@@ -229,7 +229,7 @@ will result in a few extra spaces after the prompt. That problem is [documented 
 
 **The prompt is slow on large repos.**
 
-This is also a known issue. Make sure you have `PROMPT_GEOMETRY_RPROMPT_ASYNC` set to `true` to avoid long waiting times. If the problem persists, our recommendation would be to disable the git time checks by setting `PROMPT_GEOMETRY_GIT_TIME` to `false`.
+This is also a known issue. Make sure you have `PROMPT_LOGIC_RPROMPT_ASYNC` set to `true` to avoid long waiting times. If the problem persists, our recommendation would be to disable the git time checks by setting `PROMPT_LOGIC_GIT_TIME` to `false`.
 
 **That's a neat font you have there. Can I have it?**
 

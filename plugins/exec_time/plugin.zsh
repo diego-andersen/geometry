@@ -2,7 +2,7 @@
 zmodload zsh/datetime || return
 
 # Flags
-PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
+PROMPT_LOGIC_COMMAND_MAX_EXEC_TIME=${PROMPT_LOGIC_COMMAND_MAX_EXEC_TIME:-5}
 
 typeset -g prompt_geometry_command_timestamp
 typeset -g prompt_geometry_command_exec_time
@@ -16,7 +16,7 @@ prompt_geometry_check_command_exec_time() {
 
   # Check if elapsed time is above the configured threshold
   (( elapsed = EPOCHSECONDS - ${prompt_geometry_command_timestamp:-$EPOCHSECONDS} ))
-  if (( elapsed > $PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME )); then
+  if (( elapsed > $PROMPT_LOGIC_COMMAND_MAX_EXEC_TIME )); then
     prompt_geometry_command_exec_time="$(prompt_geometry_seconds_to_human_time $elapsed)"
   fi
 

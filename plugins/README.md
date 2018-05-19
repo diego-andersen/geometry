@@ -19,12 +19,12 @@ Available plugins:
 ## Default plugins
 
 By default, geometry uses `exec_time`, `jobs`, `git` and `hg`. You can configure
-a different setup by changing the `GEOMETRY_PROMPT_PLUGINS` variable in your own
+a different setup by changing the `LOGIC_PROMPT_PLUGINS` variable in your own
 configuration files.
 
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg +rustup)
+LOGIC_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg +rustup)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
@@ -43,8 +43,8 @@ is clean and `(ノಠ益ಠ)ノ彡┻━┻` when it's dirty. Let's call it `pre
 By convention we set up configuration variables at the top:
 
 ```sh
-GEOMETRY_PRETTY_GIT_CLEAN=${GEOMETRY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
-GEOMETRY_PRETTY_GIT_DIRTY=${GEOMETRY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
+LOGIC_PRETTY_GIT_CLEAN=${LOGIC_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
+LOGIC_PRETTY_GIT_DIRTY=${LOGIC_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
 
 ```
 
@@ -53,8 +53,8 @@ Now, the user is able to change the output simply by setting an environment
 variable in their `.zshrc` file:
 
 ```sh
-# Overwrite default GEOMETRY_PRETTY_GIT_CLEAN
-GEOMETRY_PRETTY_GIT_CLEAN="(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
+# Overwrite default LOGIC_PRETTY_GIT_CLEAN
+LOGIC_PRETTY_GIT_CLEAN="(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 ```
 
 Next up, the `setup` function. It's the first thing that gets called when the
@@ -85,9 +85,9 @@ the `RPROMPT`. Let's simply check the branch status and print accordingly:
 ```sh
 geometry_prompt_pretty_git_render() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
-    echo $GEOMETRY_PRETTY_GIT_CLEAN
+    echo $LOGIC_PRETTY_GIT_CLEAN
   else
-    echo $GEOMETRY_PRETTY_GIT_DIRTY
+    echo $LOGIC_PRETTY_GIT_DIRTY
   fi
 }
 ```
@@ -118,8 +118,8 @@ source /path/to/pretty_git.zsh
 
 ```sh
 # pretty_git.zsh
-GEOMETRY_PRETTY_GIT_CLEAN=${GEOMETRY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
-GEOMETRY_PRETTY_GIT_DIRTY=${GEOMETRY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
+LOGIC_PRETTY_GIT_CLEAN=${LOGIC_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
+LOGIC_PRETTY_GIT_DIRTY=${LOGIC_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
 
 geometry_prompt_pretty_git_setup() {}
 
@@ -131,9 +131,9 @@ geometry_prompt_pretty_git_check() {
 
 geometry_prompt_pretty_git_render() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
-    echo $GEOMETRY_PRETTY_GIT_CLEAN
+    echo $LOGIC_PRETTY_GIT_CLEAN
   else
-    echo $GEOMETRY_PRETTY_GIT_DIRTY
+    echo $LOGIC_PRETTY_GIT_DIRTY
   fi
 }
 

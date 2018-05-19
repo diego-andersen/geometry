@@ -24,8 +24,8 @@ Details about creating a new plugin are listed [here](https://github.com/geometr
 
 ``` zsh
 # Step1: Define your variables above all 
-GEOMETRY_<PLUGIN_NAME>_VAR1=${GEOMETRY_<PLUGIN_NAME>_VAR1:-"VALUE1"}
-GEOMETRY_<PLUGIN_NAME>_VAR2=${GEOMETRY_<PLUGIN_NAME>_VAR2:-"VALUE2"}
+LOGIC_<PLUGIN_NAME>_VAR1=${LOGIC_<PLUGIN_NAME>_VAR1:-"VALUE1"}
+LOGIC_<PLUGIN_NAME>_VAR2=${LOGIC_<PLUGIN_NAME>_VAR2:-"VALUE2"}
 
 # Step2: This is the method that will be called first when the plugin is loaded.
 geometry_prompt_<plugin_name>_setup() {

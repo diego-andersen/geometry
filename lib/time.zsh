@@ -1,7 +1,7 @@
-GEOMETRY_COLOR_TIME_SHORT=${GEOMETRY_COLOR_TIME_SHORT:-green}
-GEOMETRY_COLOR_TIME_NEUTRAL=${GEOMETRY_COLOR_TIME_NEUTRAL:-white}
-GEOMETRY_COLOR_TIME_LONG=${GEOMETRY_COLOR_TIME_LONG:-red}
-GEOMETRY_COLOR_NO_TIME=${GEOMETRY_COLOR_NO_TIME:-red}
+LOGIC_COLOR_TIME_SHORT=${LOGIC_COLOR_TIME_SHORT:-green}
+LOGIC_COLOR_TIME_NEUTRAL=${LOGIC_COLOR_TIME_NEUTRAL:-white}
+LOGIC_COLOR_TIME_LONG=${LOGIC_COLOR_TIME_LONG:-red}
+LOGIC_COLOR_NO_TIME=${LOGIC_COLOR_NO_TIME:-red}
 
 typeset -g geometry_time_human
 typeset -g geometry_time_color
@@ -17,16 +17,16 @@ typeset -g geometry_time_color
 
   if (( days > 0 )); then
     human="${days}d"
-    color=$GEOMETRY_COLOR_TIME_LONG
+    color=$LOGIC_COLOR_TIME_LONG
   elif (( hours > 0 )); then
     human="${hours}h"
-    color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
+    color=${color:-$LOGIC_COLOR_TIME_NEUTRAL}
   elif (( minutes > 0 )); then
     human="${minutes}m"
-    color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+    color=${color:-$LOGIC_COLOR_TIME_SHORT}
   else
     human="${seconds}s"
-    color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+    color=${color:-$LOGIC_COLOR_TIME_SHORT}
   fi
 
   geometry_time_color=$color
@@ -42,10 +42,10 @@ typeset -g geometry_time_color
   local minutes=$3
   local seconds=$4
 
-  (( days > 0 )) && human+="${days}d " && color=$GEOMETRY_COLOR_TIME_LONG
-  (( hours > 0 )) && human+="${hours}h " && color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
+  (( days > 0 )) && human+="${days}d " && color=$LOGIC_COLOR_TIME_LONG
+  (( hours > 0 )) && human+="${hours}h " && color=${color:-$LOGIC_COLOR_TIME_NEUTRAL}
   (( minutes > 0 )) && human+="${minutes}m "
-  human+="${seconds}s" && color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+  human+="${seconds}s" && color=${color:-$LOGIC_COLOR_TIME_SHORT}
 
   geometry_time_color=$color
   geometry_time_human=$human
