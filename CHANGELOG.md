@@ -1,8 +1,12 @@
-# geometry Change Log
+# logic Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## Forked
+
+This project is forked from the excellent [geometry prompt](https://github.com/geometry-zsh/geometry).
 
 ## [Unreleased]
 ### Added
