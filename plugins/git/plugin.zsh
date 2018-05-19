@@ -19,10 +19,10 @@ LOGIC_SYMBOL_GIT_CONFLICTS_UNSOLVED=${LOGIC_SYMBOL_GIT_CONFLICTS_UNSOLVED:-"◈"
 LOGIC_SYMBOL_GIT_STASHES=${LOGIC_SYMBOL_GIT_STASHES:-"●"}
 
 # Combine color and symbols
-LOGIC_GIT_DIRTY=$(prompt_geometry_colorize $LOGIC_COLOR_GIT_DIRTY $LOGIC_SYMBOL_GIT_DIRTY)
-LOGIC_GIT_CLEAN=$(prompt_geometry_colorize $LOGIC_COLOR_GIT_CLEAN $LOGIC_SYMBOL_GIT_CLEAN)
-LOGIC_GIT_BARE=$(prompt_geometry_colorize $LOGIC_COLOR_GIT_BARE $LOGIC_SYMBOL_GIT_BARE)
-LOGIC_GIT_STASHES=$(prompt_geometry_colorize $LOGIC_COLOR_GIT_STASHES $LOGIC_SYMBOL_GIT_STASHES)
+LOGIC_GIT_DIRTY=$(prompt_logic_colorize $LOGIC_COLOR_GIT_DIRTY $LOGIC_SYMBOL_GIT_DIRTY)
+LOGIC_GIT_CLEAN=$(prompt_logic_colorize $LOGIC_COLOR_GIT_CLEAN $LOGIC_SYMBOL_GIT_CLEAN)
+LOGIC_GIT_BARE=$(prompt_logic_colorize $LOGIC_COLOR_GIT_BARE $LOGIC_SYMBOL_GIT_BARE)
+LOGIC_GIT_STASHES=$(prompt_logic_colorize $LOGIC_COLOR_GIT_STASHES $LOGIC_SYMBOL_GIT_STASHES)
 LOGIC_GIT_REBASE=$LOGIC_SYMBOL_GIT_REBASE
 LOGIC_GIT_UNPULLED=$LOGIC_SYMBOL_GIT_UNPULLED
 LOGIC_GIT_UNPUSHED=$LOGIC_SYMBOL_GIT_UNPUSHED
@@ -38,7 +38,7 @@ PROMPT_LOGIC_GIT_SHOW_STASHES=${PROMPT_LOGIC_GIT_SHOW_STASHES:-true}
 LOGIC_GIT_NO_COMMITS_MESSAGE=${LOGIC_GIT_NO_COMMITS_MESSAGE:-"no commits"}
 LOGIC_GIT_SEPARATOR=${LOGIC_GIT_SEPARATOR:-"::"}
 
-prompt_geometry_git_time_since_commit() {
+prompt_logic_git_time_since_commit() {
   # Defaults to "", which would hide the git_time_since_commit block
   local git_time_since_commit=""
 
@@ -47,21 +47,21 @@ prompt_geometry_git_time_since_commit() {
   if [[ -n $last_commit ]]; then
       now=$(date +%s)
       seconds_since_last_commit=$((now - last_commit))
-      git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit $PROMPT_LOGIC_GIT_TIME_LONG_FORMAT)
+      git_time_since_commit=$(prompt_logic_seconds_to_human_time $seconds_since_last_commit $PROMPT_LOGIC_GIT_TIME_LONG_FORMAT)
   elif $PROMPT_LOGIC_GIT_TIME_SHOW_EMPTY; then
-      git_time_since_commit=$(prompt_geometry_colorize $LOGIC_COLOR_NO_TIME $LOGIC_GIT_NO_COMMITS_MESSAGE)
+      git_time_since_commit=$(prompt_logic_colorize $LOGIC_COLOR_NO_TIME $LOGIC_GIT_NO_COMMITS_MESSAGE)
   fi
 
   echo $git_time_since_commit
 }
 
-prompt_geometry_git_branch() {
+prompt_logic_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "$(prompt_geometry_colorize $LOGIC_COLOR_GIT_BRANCH $ref)"
+  echo "$(prompt_logic_colorize $LOGIC_COLOR_GIT_BRANCH $ref)"
 }
 
-prompt_geometry_git_status() {
+prompt_logic_git_status() {
   if test -z "$(git status --porcelain --ignore-submodules HEAD)"; then
     if test -z "$(git ls-files --others --modified --exclude-standard)"; then
       echo $LOGIC_GIT_CLEAN
@@ -73,18 +73,18 @@ prompt_geometry_git_status() {
   fi
 }
 
-prompt_geometry_is_rebasing() {
+prompt_logic_is_rebasing() {
   git_dir=$(git rev-parse --git-dir)
   test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply"
 }
 
-prompt_geometry_git_rebase_check() {
-  if $(prompt_geometry_is_rebasing); then
+prompt_logic_git_rebase_check() {
+  if $(prompt_logic_is_rebasing); then
     echo "$LOGIC_GIT_REBASE"
   fi
 }
 
-prompt_geometry_git_remote_check() {
+prompt_logic_git_remote_check() {
   local_commit=$(git rev-parse "@" 2>/dev/null)
   remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
 
@@ -102,10 +102,10 @@ prompt_geometry_git_remote_check() {
   fi
 }
 
-prompt_geometry_git_symbol() {
+prompt_logic_git_symbol() {
   local render=""
-  local git_rebase="$(prompt_geometry_git_rebase_check)"
-  local git_remote="$(prompt_geometry_git_remote_check)"
+  local git_rebase="$(prompt_logic_git_rebase_check)"
+  local git_remote="$(prompt_logic_git_remote_check)"
 
   if [[ -n $git_rebase ]]; then
     render+="$git_rebase"
@@ -122,7 +122,7 @@ prompt_geometry_git_symbol() {
   echo -n $render
 }
 
-prompt_geometry_git_conflicts() {
+prompt_logic_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
   if [[ ! -z $conflicts ]]; then
@@ -144,21 +144,21 @@ prompt_geometry_git_conflicts() {
       color=$LOGIC_COLOR_GIT_CONFLICTS_UNSOLVED
     fi
 
-    echo "$(prompt_geometry_colorize $color $text) "
+    echo "$(prompt_logic_colorize $color $text) "
   else
     echo ""
   fi
 }
 
-geometry_prompt_git_setup() {
+logic_prompt_git_setup() {
   (( $+commands[git] )) || return 1
 }
 
-geometry_prompt_git_check() {
+logic_prompt_git_check() {
   git rev-parse --git-dir > /dev/null 2>&1 || return 1
 }
 
-geometry_prompt_git_render() {
+logic_prompt_git_render() {
   # Check if we are in a bare repo
   if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) == "false" ]] ; then
     echo -n "$LOGIC_GIT_BARE"
@@ -166,11 +166,11 @@ geometry_prompt_git_render() {
   fi
 
   if $PROMPT_LOGIC_GIT_CONFLICTS ; then
-    conflicts="$(prompt_geometry_git_conflicts)"
+    conflicts="$(prompt_logic_git_conflicts)"
   fi
 
   if $PROMPT_LOGIC_GIT_TIME; then
-    local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
+    local git_time_since_commit=$(prompt_logic_git_time_since_commit)
     if [[ -n $git_time_since_commit ]]; then
         time=" $git_time_since_commit $LOGIC_GIT_SEPARATOR"
     fi
@@ -180,13 +180,13 @@ geometry_prompt_git_render() {
       stashes=" $LOGIC_GIT_STASHES $LOGIC_GIT_SEPARATOR";
   fi
 
-  local render="$(prompt_geometry_git_symbol)"
+  local render="$(prompt_logic_git_symbol)"
 
   if [[ -n $render ]]; then
     render+=" "
   fi
 
-  render+="$(prompt_geometry_git_branch) ${conflicts}${LOGIC_GIT_SEPARATOR}${time}${stashes} $(prompt_geometry_git_status)"
+  render+="$(prompt_logic_git_branch) ${conflicts}${LOGIC_GIT_SEPARATOR}${time}${stashes} $(prompt_logic_git_status)"
 
   echo -n $render
 }

@@ -16,8 +16,8 @@ PROMPT_LOGIC_RPROMPT_ASYNC=${PROMPT_LOGIC_RPROMPT_ASYNC:-true}
 PROMPT_LOGIC_ENABLE_PLUGINS=${PROMPT_LOGIC_ENABLE_PLUGINS:-true}
 PROMPT_LOGIC_PRIMARY_SUFFIX=${PROMPT_LOGIC_PRIMARY_SUFFIX:-" "}
 
-prompt_geometry_render() {
-  PROMPT="$(geometry_plugin_render primary)$PROMPT_LOGIC_PRIMARY_SUFFIX"
+prompt_logic_render() {
+  PROMPT="$(logic_plugin_render primary)$PROMPT_LOGIC_PRIMARY_SUFFIX"
 
   PROMPT2=" $LOGIC_SYMBOL_RPROMPT "
 
@@ -28,29 +28,29 @@ prompt_geometry_render() {
         RPROMPT=""
     else
         setopt localoptions no_prompt_subst
-        RPROMPT="$(geometry_plugin_render secondary)"
+        RPROMPT="$(logic_plugin_render secondary)"
     fi
   fi
 }
 
-prompt_geometry_setup() {
+prompt_logic_setup() {
   zmodload zsh/datetime
   autoload -U add-zsh-hook
 
   if $PROMPT_LOGIC_ENABLE_PLUGINS; then
-    geometry_plugin_setup
+    logic_plugin_setup
   fi
 
   # Helper functions from lib/title.zsh
-  add-zsh-hook preexec prompt_geometry_set_cmd_title
-  add-zsh-hook precmd prompt_geometry_set_title
+  add-zsh-hook preexec prompt_logic_set_cmd_title
+  add-zsh-hook precmd prompt_logic_set_title
 
-  add-zsh-hook precmd prompt_geometry_render
+  add-zsh-hook precmd prompt_logic_render
 
   if $PROMPT_LOGIC_SHOW_RPROMPT && $PROMPT_LOGIC_RPROMPT_ASYNC; then
-    geometry_async_setup
+    logic_async_setup
   fi
 }
 
-# Setup and initialize geometry
-prompt_geometry_setup
+# Setup and initialize logic
+prompt_logic_setup

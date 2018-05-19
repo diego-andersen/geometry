@@ -1,6 +1,6 @@
 # Path
 
-Display current path and geometry symbol.
+Display current path and logic symbol.
 
 ## Configuration
 

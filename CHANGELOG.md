@@ -1,4 +1,4 @@
-# geometry Change Log
+# logic Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
@@ -22,4 +22,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Change Log file
 - Initial release features
 
-[Unreleased]: https://github.com/geometry-zsh/geometry/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/logic-zsh/logic/compare/v1.0.0...HEAD

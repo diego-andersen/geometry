@@ -1,6 +1,6 @@
 # Plugins
 
-geometry works with its own plugin architecture. It's very easy to enable and
+logic works with its own plugin architecture. It's very easy to enable and
 disable plugins. You can also create your own plugins (and even submit them in a
 PR).
 
@@ -18,7 +18,7 @@ Available plugins:
 
 ## Default plugins
 
-By default, geometry uses `exec_time`, `jobs`, `git` and `hg`. You can configure
+By default, logic uses `exec_time`, `jobs`, `git` and `hg`. You can configure
 a different setup by changing the `LOGIC_PROMPT_PLUGINS` variable in your own
 configuration files.
 
@@ -27,7 +27,7 @@ configuration files.
 LOGIC_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg +rustup)
 ```
 
-*Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
+*Note: if you're not sure where to put logic configs, just add them to your `.zshrc`*
 
 *Note: the `+` before rustup means the plugin is [pinned](#Pinning), and will always render, regardless of context*
 
@@ -62,18 +62,18 @@ plugin is loaded, so you might want to use for configuration. We won't need it
 for now, so let's leave it blank.
 
 ```sh
-geometry_prompt_pretty_git_setup() {}
+logic_prompt_pretty_git_setup() {}
 ```
 
 Note that the `setup`, `check` and `render` functions must obey the naming convention of
-`geometry_prompt_<plugin_name>_setup/render`.
+`logic_prompt_<plugin_name>_setup/render`.
 
 Now, checking. The `check` function is called before `render`, and should check if
 it makes sense to display the plugin in the current context, returning non-zero if
 we should skip rendering.
 
 ```sh
-geometry_prompt_pretty_git_check() {
+logic_prompt_pretty_git_check() {
   # Do nothing if we're not in a repository
   [ -d $PWD/.git ] || return 1
 }
@@ -83,7 +83,7 @@ Now, rendering. The `render` function is the one that gets called to print to
 the `RPROMPT`. Let's simply check the branch status and print accordingly:
 
 ```sh
-geometry_prompt_pretty_git_render() {
+logic_prompt_pretty_git_render() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $LOGIC_PRETTY_GIT_CLEAN
   else
@@ -97,21 +97,21 @@ for example the `node` built-in plugin will only be displayed when sitting on a
 npm/yarn-based project. This is done in order to have an uncluttered prompt, we
 encourage you to have this in mind.
 
-Finally you'll need to "register" the plugin with geometry in order to set it up
+Finally you'll need to "register" the plugin with logic in order to set it up
 and render it on each render cycle.
 
 ```sh
-geometry_plugin_register pretty_git
+logic_plugin_register pretty_git
 ```
 
 ### Full working example
 
 Save the following example as `pretty_git.zsh` somewhere in your `.dotfiles` 
-directory and source it _after_ sourcing geometry, ex.:
+directory and source it _after_ sourcing logic, ex.:
 
 ```sh
 # .zshrc
-source /path/to/geometry.zsh
+source /path/to/logic.zsh
 source /path/to/pretty_git.zsh
 
 ```
@@ -121,15 +121,15 @@ source /path/to/pretty_git.zsh
 LOGIC_PRETTY_GIT_CLEAN=${LOGIC_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
 LOGIC_PRETTY_GIT_DIRTY=${LOGIC_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
 
-geometry_prompt_pretty_git_setup() {}
+logic_prompt_pretty_git_setup() {}
 
-geometry_prompt_pretty_git_check() {
+logic_prompt_pretty_git_check() {
   # Do nothing if we're not in a repository
   [ -d $PWD/.git ] || return 1
 }
 
 
-geometry_prompt_pretty_git_render() {
+logic_prompt_pretty_git_render() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $LOGIC_PRETTY_GIT_CLEAN
   else
@@ -137,11 +137,11 @@ geometry_prompt_pretty_git_render() {
   fi
 }
 
-geometry_plugin_register pretty_git
+logic_plugin_register pretty_git
 
 ```
 
 ## Pinning
 
 A user may decide to pin a plugin by prepending a `+` before the plugin name.
-This means geometry will skip the `geometry_prompt_${plugin}_check()` function, and always run the `render` function.
+This means logic will skip the `logic_prompt_${plugin}_check()` function, and always run the `render` function.

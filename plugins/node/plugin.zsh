@@ -3,17 +3,17 @@ LOGIC_COLOR_PACKAGER_VERSION=${LOGIC_COLOR_PACKAGER_VERSION:-green}
 
 # Symbol definitions
 LOGIC_SYMBOL_PACKAGER_VERSION=${LOGIC_SYMBOL_PACKAGER_VERSION:-"⬡"}
-LOGIC_NODE_PACKAGER_VERSION=$(prompt_geometry_colorize $LOGIC_COLOR_PACKAGER_VERSION $LOGIC_SYMBOL_PACKAGER_VERSION) 
+LOGIC_NODE_PACKAGER_VERSION=$(prompt_logic_colorize $LOGIC_COLOR_PACKAGER_VERSION $LOGIC_SYMBOL_PACKAGER_VERSION) 
 
-geometry_prompt_node_setup() {
+logic_prompt_node_setup() {
     (( $+commands[node] )) || (( $+commands[yarn] )) || return 1
 }
 
-geometry_prompt_node_check() {
+logic_prompt_node_check() {
     test -f package.json || test -f yarn.lock || return 1
 }
 
-geometry_prompt_node_render() {
+logic_prompt_node_render() {
     local LOGIC_NODE_DEFAULT_PACKAGE_MANAGER=npm
 
     if [[ $+commands[yarn] && -f yarn.lock ]]; then

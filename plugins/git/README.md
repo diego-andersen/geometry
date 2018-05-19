@@ -1,12 +1,12 @@
 # Git
 
-The git plugin is one of the most developed plugins in geometry.
+The git plugin is one of the most developed plugins in logic.
 
 ## Features
 
 ### Elapsed time since last git commit
 
-By default, geometry shows you the time since a commit has been made in the current repository. You can choose to disable this check by setting the
+By default, logic shows you the time since a commit has been made in the current repository. You can choose to disable this check by setting the
 `PROMPT_LOGIC_GIT_TIME` variable to `false`.
 
 We recommend doing this if the prompt is too slow on large repositories.
@@ -30,7 +30,7 @@ seconds (`12s`), minutes (`2m`), hours (`5h`) or days (`30d`). However, by setti
 
 ### 'No commits' message
 
-When you create a new repo, geometry can display a "no commits" message, where
+When you create a new repo, logic can display a "no commits" message, where
 it would, usually, display the time since last commit. This behaviour can be
 unchecked by setting the `PROMPT_LOGIC_GIT_TIME_SHOW_EMPTY` variable to
 `false`.

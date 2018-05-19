@@ -34,24 +34,24 @@ fi
 typeset -gA _LOGIC_PROMPT_PLUGINS
 
 # Set up default plugins
-geometry_plugin_setup() {
+logic_plugin_setup() {
   local _ctx_plugins
 
   for ctx in $LOGIC_PROMPT_CTX; do
     _ctx_plugins=(${(s/ /)LOGIC_PROMPT_PLUGINS[$ctx]})
     for plugin in $_ctx_plugins; do
       # Source built-in plugin if necessary, custom plugins should be already
-      # sourced by the user, otherwise `geometry_plugin_register` will raise and error
+      # sourced by the user, otherwise `logic_plugin_register` will raise and error
       test -f "$LOGIC_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_
 
       # Register plugin for it's context
-      geometry_plugin_register $plugin $ctx
+      logic_plugin_register $plugin $ctx
     done
   done
 }
 
 # Registers a plugin
-geometry_plugin_register() {
+logic_plugin_register() {
   if [[ $# -eq 0 ]]; then
     echo "Error: Missing argument." >&2
     return 1
@@ -70,7 +70,7 @@ geometry_plugin_register() {
   fi
 
   # Check plugin has been sourced
-  local plugin_setup_function="geometry_prompt_${plugin#+}_setup"
+  local plugin_setup_function="logic_prompt_${plugin#+}_setup"
   if [[ $+functions[$plugin_setup_function] == 0 ]]; then
     echo "Error: '${plugin#+}' plugin not available." >&2
     return 1
@@ -84,7 +84,7 @@ geometry_plugin_register() {
 }
 
 # Unregisters a given plugin
-geometry_plugin_unregister() {
+logic_plugin_unregister() {
   local plugin=$1
   local ctx=${2:-secondary}
 
@@ -97,8 +97,8 @@ geometry_plugin_unregister() {
   fi
 
   # Use shutdown function (handle pinned plugins)
-  if [[ $+functions["geometry_prompt_${plugin#+}_shutdown"] != 0 ]]; then
-    geometry_prompt_${plugin#+}_shutdown $ctx
+  if [[ $+functions["logic_prompt_${plugin#+}_shutdown"] != 0 ]]; then
+    logic_prompt_${plugin#+}_shutdown $ctx
   fi
 
   _ctx_plugins[$_ctx_plugins[(i)$plugin]]=()
@@ -106,7 +106,7 @@ geometry_plugin_unregister() {
 }
 
 # List registered plugins
-geometry_plugin_list() {
+logic_plugin_list() {
   for ctx in $LOGIC_PROMPT_CTX; do
     echo "$ctx:"
     echo $_LOGIC_PROMPT_PLUGINS[$ctx]
@@ -114,7 +114,7 @@ geometry_plugin_list() {
 }
 
 # Checks a registered plugin
-geometry_plugin_check() {
+logic_plugin_check() {
   local plugin=${1#+}
   local ctx=${2:-secondary}
   local _ctx_plugins;
@@ -124,13 +124,13 @@ geometry_plugin_check() {
   [ $_ctx_plugins[(r)+$plugin] ] && return 0
 
   # No need to strip-out '+' from $plugin as we have returned above
-  (( $+functions[geometry_prompt_${plugin}_check] )) || return 0
+  (( $+functions[logic_prompt_${plugin}_check] )) || return 0
 
-  geometry_prompt_${plugin}_check $ctx || return 1
+  logic_prompt_${plugin}_check $ctx || return 1
 }
 
 # Renders the registered plugins
-geometry_plugin_render() {
+logic_plugin_render() {
   local ctx=${1:-secondary}
   local render=""
   local ctx_prompt=""
@@ -138,9 +138,9 @@ geometry_plugin_render() {
 
   _ctx_plugins=(${(s/ /)_LOGIC_PROMPT_PLUGINS[$ctx]})
   for plugin in $_ctx_plugins; do
-    geometry_plugin_check $plugin $ctx || continue
+    logic_plugin_check $plugin $ctx || continue
 
-    render=$(geometry_prompt_${plugin#+}_render $ctx)
+    render=$(logic_prompt_${plugin#+}_render $ctx)
     if [[ -n $render ]]; then
       [[ -n $ctx_prompt ]] && ctx_prompt+="$LOGIC_PLUGIN_SEPARATOR"
       ctx_prompt+="$render"

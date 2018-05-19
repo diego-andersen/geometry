@@ -25,7 +25,7 @@ PROMPT_LOGIC_COLORIZE_SYMBOL=${PROMPT_LOGIC_COLORIZE_SYMBOL:-false}
 PROMPT_LOGIC_COLORIZE_ROOT=${PROMPT_LOGIC_COLORIZE_ROOT:-false}
 
 # Helper function to colorize based off a string
-prompt_geometry_hash_color() {
+prompt_logic_hash_color() {
   colors=(`seq 1 9`)
 
   if (($(echotc Co) == 256)); then
@@ -41,20 +41,20 @@ prompt_geometry_hash_color() {
   echo ${colors[$(($sum % ${#colors}))]}
 }
 
-geometry_prompt_path_setup() {
+logic_prompt_path_setup() {
   # Combine color and symbols
-  LOGIC_EXIT_VALUE=$(prompt_geometry_colorize $LOGIC_COLOR_EXIT_VALUE $LOGIC_SYMBOL_EXIT_VALUE)
-  LOGIC_PROMPT=$(prompt_geometry_colorize $LOGIC_COLOR_PROMPT $LOGIC_SYMBOL_PROMPT)
+  LOGIC_EXIT_VALUE=$(prompt_logic_colorize $LOGIC_COLOR_EXIT_VALUE $LOGIC_SYMBOL_EXIT_VALUE)
+  LOGIC_PROMPT=$(prompt_logic_colorize $LOGIC_COLOR_PROMPT $LOGIC_SYMBOL_PROMPT)
 
   if $PROMPT_LOGIC_COLORIZE_SYMBOL; then
-    LOGIC_COLOR_PROMPT=$(prompt_geometry_hash_color $HOST)
-    LOGIC_PROMPT=$(prompt_geometry_colorize $LOGIC_COLOR_PROMPT $LOGIC_SYMBOL_PROMPT)
+    LOGIC_COLOR_PROMPT=$(prompt_logic_hash_color $HOST)
+    LOGIC_PROMPT=$(prompt_logic_colorize $LOGIC_COLOR_PROMPT $LOGIC_SYMBOL_PROMPT)
   fi
 }
 
-geometry_prompt_path_check() {}
+logic_prompt_path_check() {}
 
-geometry_prompt_path_render() {
+logic_prompt_path_render() {
   if [ $? -eq 0 ] ; then
     PROMPT_SYMBOL=$LOGIC_SYMBOL_PROMPT
   else
@@ -62,7 +62,7 @@ geometry_prompt_path_render() {
   fi
 
   if $PROMPT_LOGIC_COLORIZE_ROOT && [[ $UID == 0 || $EUID == 0 ]]; then
-    LOGIC_PROMPT=$(prompt_geometry_colorize $LOGIC_COLOR_ROOT $LOGIC_SYMBOL_ROOT)
+    LOGIC_PROMPT=$(prompt_logic_colorize $LOGIC_COLOR_ROOT $LOGIC_SYMBOL_ROOT)
   fi
 
   local dir=$LOGIC_PROMPT_PATH
