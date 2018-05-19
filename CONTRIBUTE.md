@@ -1,11 +1,11 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make/new feature you want to add via issue, or any other method with the owners of this repository. 
+When contributing to this repository, please first discuss the change you wish to make/new feature you want to add via issue, or any other method with the owners of this repository.
 
 
 ## Pull Request Process
 
-1. It is advised to create a PR if you are stuck (so others can help you) or when your feature is complete and tested. 
+1. It is advised to create a PR if you are stuck (so others can help you) or when your feature is complete and tested.
 2. Update the CHANGELOG.md with details of changes made.
 3. Increase the version numbers in any examples files and the README.md to the new version that this
    Pull Request would represent.
@@ -14,7 +14,7 @@ When contributing to this repository, please first discuss the change you wish t
 
 ## New plugin template
 
-Details about creating a new plugin are listed [here](https://github.com/logic-zsh/logic/blob/master/plugins/README.md) and a wiki using third party plugins are [here](https://github.com/logic-zsh/logic/wiki/plugins) . See below for a common template that can be followed while creating a new plugin.
+Details about creating a new plugin are listed [here](https://github.com/diego-andersen/logic/blob/master/plugins/README.md) and a wiki using third party plugins are [here](https://github.com/diego-andersen/logic/wiki/plugins) . See below for a common template that can be followed while creating a new plugin.
 
 * To create a new plugin, you will need a setup, check, and a render function, with the plugin name on them
 * Your new plugin needs to be a plugin.zsh file placed inside a directory with the name of the plugin
@@ -23,7 +23,7 @@ Details about creating a new plugin are listed [here](https://github.com/logic-z
 
 
 ``` zsh
-# Step1: Define your variables above all 
+# Step1: Define your variables above all
 LOGIC_<PLUGIN_NAME>_VAR1=${LOGIC_<PLUGIN_NAME>_VAR1:-"VALUE1"}
 LOGIC_<PLUGIN_NAME>_VAR2=${LOGIC_<PLUGIN_NAME>_VAR2:-"VALUE2"}
 
@@ -47,4 +47,4 @@ logic_plugin_register <plugin_name>
 
 ```
 
-You can follow the above template to get started with your own plugin. Please feel free to open an issue in case you have questions. 
+You can follow the above template to get started with your own plugin. Please feel free to open an issue in case you have questions.
