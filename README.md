@@ -1,10 +1,6 @@
 # logic
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/logic-zsh/Lobby)
-[![Trello](https://img.shields.io/badge/trello-board-blue.svg)](https://trello.com/b/GfM4e6Ro/logic)
-[![GitHub release](https://img.shields.io/github/release/logic-zsh/logic.svg)](https://github.com/logic-zsh/logic/releases/latest)
-
-logic is a minimalistic, fully customizable zsh prompt theme.
+logic is a fork of the excellent [geometry prompt](https://github.com/geometry-zsh/geometry).
 
 ![logic](screenshots/screencast.gif)
 
@@ -18,30 +14,27 @@ logic starts small, with good defaults, and allows you to customize it at your o
 * [FAQs](#faqs)
 * [Maintainers](#maintainers)
 
-## Installing
+## Installation
 
-*K, I'm sold. Beam me up, Scotty.*
+### antigen
 
-
-### Install using antigen
-
-Just add `antigen theme logic-zsh/logic` to your `.zshrc`.
+Just add `antigen theme diego-andersen/logic` to your `.zshrc`.
 
 
-### Install using oh-my-zsh
+### oh-my-zsh
 
-Move the entire `logic` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `ZSH_THEME="logic/logic"` in your `.zshrc`.
+Move or symlink the entire `logic` directory to `$HOME/.oh-my-zsh/custom/themes`, and set `ZSH_THEME="logic/logic"` in your `.zshrc`.
 
 
-### Install using zplug
+### zplug
 
-Add `zplug "logic-zsh/logic"` to your `.zshrc`.
+Add `zplug "diego-andersen/logic"` to your `.zshrc`.
 
 ### Manual install
 
 Clone this repository as follows:
 
-    git clone https://github.com/logic-zsh/logic
+    git clone https://github.com/diego-andersen/logic
     cd logic
     git submodule update --init --recursive
 
@@ -100,7 +93,7 @@ export LOGIC_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always render
 logic also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
 instructions and examples.
 
-Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/logic-zsh/logic/wiki/Plugins).
+Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/diego-andersen/logic/wiki/Plugins).
 
 ## Configuration
 
@@ -220,12 +213,12 @@ variables before logic is loaded**.
 
 [Relevant xkcd](http://xkcd.com/1726/)
 
-This is a [known problem](https://github.com/logic-zsh/logic/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update logic and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
+This is a [known problem](https://github.com/geometry-zsh/geometry/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update logic and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
 
 **There are too many/few spaces after the symbol or the prompt.**
 
 You're probably using a different prompt character. zsh has a few issues determining the length of the prompt and while it should work for most cases, changing the symbol to a different character (an example would be:  ☁︎ )
-will result in a few extra spaces after the prompt. That problem is [documented here](https://github.com/logic-zsh/logic/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space through the `prompt_logic_render` function in `logic.zsh`. If you find a universal solution, feel free to make a PR for it.
+will result in a few extra spaces after the prompt. That problem is [documented here](https://github.com/geometry-zsh/geometry/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space through the `prompt_logic_render` function in `logic.zsh`. If you find a universal solution, feel free to make a PR for it.
 
 **The prompt is slow on large repos.**
 
@@ -242,10 +235,10 @@ Well, yeah. Eventually. But this warning message doesn't mean anything is wrong.
 Feel free to relax. It shows when you load logic twice. It was intended as a
 warning for faulty custom configuration, such as registering a plugin in two
 different places. If you do `source ~/.zshrc` it's perfectly normal to show up.
-See [this discussion](https://github.com/logic-zsh/logic/issues/109#issuecomment-288997441) for more info.
+See [this discussion](https://github.com/geometry-zsh/geometry/issues/109#issuecomment-288997441) for more info.
 
 ## Maintainers
 
 logic is currently maintained by [fribmendes](https://github.com/fribmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
 
-A big thank you to those who have previously [contributed](https://github.com/logic-zsh/logic/graphs/contributors).
+A big thank you to those who have previously [contributed](https://github.com/geometry-zsh/geometry/graphs/contributors).
