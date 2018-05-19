@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Fork from geometry-zsh
+
+Project forked from [geometry-zsh/geometry](https://github.com/geometry-zsh/geometry/) in order to add personal preferences without polluting.
+Renamed to logic, to keep with the mathematical theme.
+
 ## [Unreleased]
 ### Added
 - Background-jobs plugin as builtin plugin
